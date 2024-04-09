@@ -192,19 +192,4 @@ EXTRA_CFLAGS += -I$(src)/include/ -I$(src)/
 KBUILD_CFLAGS += -I$(LINUXDIR)/include -I$(shell pwd)
 
 bcmdhd-objs := $(DHDOFILES)
-obj-m   += bcmdhd.o
-
-all:
-	@echo "$(MAKE) -C $(LINUXDIR) O=$(BUILD_DIR) M=$(LOCAL_DIR) modules"
-	@$(MAKE) -C $(LINUXDIR) O=$(BUILD_DIR) M=$(LOCAL_DIR) V=1 modules
-
-clean:
-	rm -rf *.o *.ko *.mod.c *~ .*.cmd *.o.cmd .*.o.cmd \
-	Module.symvers modules.order .tmp_versions modules.builtin
-
-move:
-	mv $(DHDCFILES) used/
-
-install:
-	@$(MAKE) --no-print-directory -C $(KDIR) \
-		SUBDIRS=$(CURDIR) modules_install
+obj-$(CONFIG_BCMDHD)   += bcmdhd.o
